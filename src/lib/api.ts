@@ -2,7 +2,7 @@ import createClient from 'openapi-fetch';
 import type { paths } from './api-types';
 
 const baseUrl = '/api';
-const { GET } = createClient<paths>({ baseUrl });
+const { GET, POST } = createClient<paths>({ baseUrl });
 
 // Cache configuration
 const defaultCacheTime = 1000 * 60 * 5; // 5 minutes
@@ -41,6 +41,17 @@ export async function getMunicipalityDetails(id: string) {
     }
   });
   if (error) throw error;
+  return data;
+}
+
+// Auth API
+export async function authenticateWithGithub(code: string) {
+  const {data, error} = await POST('/auth/github', {
+    body: {
+      code
+    }
+  })
+  if(error) throw error;
   return data;
 }
 
