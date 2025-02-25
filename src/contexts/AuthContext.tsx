@@ -9,7 +9,7 @@ export interface AuthContext {
     token: string
     login: (code: string, state: string) => Promise<boolean>
     logout: () => void,
-    isAuthentificated: () => boolean,
+    isAuthenticated: () => boolean,
     getAuthUrl: () => string,
     parseToken: () => Token | null
 }
@@ -46,7 +46,7 @@ const AuthProvider = ({children}: {children: React.ReactNode}) => {
             }
     }
     
-    const isAuthentificated = () => {
+    const isAuthenticated = () => {
         const parsedToken = parseToken();
         if(parsedToken !== null) {
             return parsedToken.exp > (Date.now() / 1000)
@@ -86,7 +86,7 @@ const AuthProvider = ({children}: {children: React.ReactNode}) => {
         localStorage.removeItem("token");
     };
 
-    return (<AuthContext.Provider value={{token, login, logout, isAuthentificated, getAuthUrl, parseToken}}>
+    return (<AuthContext.Provider value={{token, login, logout, isAuthenticated, getAuthUrl, parseToken}}>
         {children}
     </AuthContext.Provider>);  
 }

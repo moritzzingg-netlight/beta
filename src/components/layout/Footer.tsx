@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 import { useNavigate } from 'react-router-dom';
 
 export function Footer() {
-  const { getAuthUrl, isAuthentificated, parseToken, logout } = useAuth()
+  const { getAuthUrl, isAuthenticated, parseToken, logout } = useAuth()
   const userinfo = parseToken();
   const navigate = useNavigate()
   
@@ -92,17 +92,17 @@ export function Footer() {
           <a href="/cc" className="hover:text-white transition-colors">
             CC BY-SA - Attribution-ShareAlike 4.0
           </a>
-          {!isAuthentificated() && (
+          {!isAuthenticated() && (
             <a onClick={() => {window.location.href = getAuthUrl()}} className="hover:text-white transition-colors cursor-pointer">
               Login
             </a>
           )}
-          { isAuthentificated() && (
+          { isAuthenticated() && (
             <a onClick={() => {logout(); navigate("/")}} className="hover:text-white cursor-pointer transition-colors">
               Logout
             </a>    
           )}     
-          {isAuthentificated() && (
+          {isAuthenticated() && (
             <div className='hover:text-white ms-auto flex items-center'>
               <span>Välkommen, {userinfo!.name}</span>
               <Avatar className="flex-shrink-0 ms-1">
