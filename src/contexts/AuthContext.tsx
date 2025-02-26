@@ -73,9 +73,9 @@ const AuthProvider = ({children}: {children: React.ReactNode}) => {
          localStorage.setItem(oauthStateKey, oauthState);
  
          const authUrl = "https://github.com/login/oauth/authorize?" + 
-         "client_id=Ov23li36hssEnByk6XB9" +
+         "client_id=Ov23liXxnsQCvlF3VVnH" +
          "&redirect_uri=" + encodeURIComponent("http://localhost:5173/auth/callback") +
-         "&scope=user:email,%20read:org" +
+         "&scope=user,%20read:org,%20repo,%20project" +
          "&state=" + oauthStateKey + ":" + oauthState;
  
          return authUrl;

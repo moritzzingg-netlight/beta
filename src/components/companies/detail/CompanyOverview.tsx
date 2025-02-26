@@ -3,6 +3,10 @@ import { Text } from "@/components/ui/text";
 import { CompanyChat } from './CompanyChat';
 import { EmissionsComparison } from './EmissionsComparison';
 import type { CompanyDetails, ReportingPeriod } from '@/types/company';
+import { useAuth } from '@/contexts/AuthContext';
+import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
+import { Pen } from "lucide-react";
 
 interface CompanyOverviewProps {
   company: CompanyDetails;
@@ -10,6 +14,8 @@ interface CompanyOverviewProps {
 }
 
 export function CompanyOverview({ company, selectedPeriod }: CompanyOverviewProps) {
+  const {isAuthenticated} = useAuth();
+  const navigate = useNavigate();
   const periodYear = new Date(selectedPeriod.endDate).getFullYear();
   const sectorName = company.industry?.industryGics?.sv?.sectorName || 
                     company.industry?.industryGics?.en?.sectorName || 
@@ -21,7 +27,17 @@ export function CompanyOverview({ company, selectedPeriod }: CompanyOverviewProp
         <div className="space-y-4">
           <div className="flex items-center gap-4">
             <Text variant="display">{company.name}</Text>
+            <div className='flex flex-col h-full justify-around'>
             <CompanyChat companyName={company.name} companyId={company.wikidataId} />
+              {isAuthenticated() && (
+                <Button variant="outline" size="sm" className="gap-2 mt-2" onClick={() => navigate("edit")}>
+                    Edit
+                    <div className="w-5 h-5 rounded-full bg-orange-5/30 text-orange-2 text-xs flex items-center justify-center">
+                      <Pen></Pen>
+                    </div>
+                </Button>
+              )}
+            </div>            
           </div>
           <Text variant="muted" className="text-lg max-w-3xl">
             {company.description}
